@@ -9,8 +9,8 @@ export const useSiteStore = defineStore('site', () => {
 
   const companyName = computed(() => companyInfo.value?.companyName || '申朴信息')
   const stockCode = computed(() => companyInfo.value?.stockCode || '870221')
-  const contactPhone = computed(() => companyInfo.value?.contactPhone || '400-888-8888')
-  const contactEmail = computed(() => companyInfo.value?.contactEmail || 'contact@cisetech.com')
+  const contactPhone = computed(() => companyInfo.value?.contactPhone || '(021)-6075 6566')
+  const contactEmail = computed(() => companyInfo.value?.contactEmail || 'info@cisetech.com')
 
   async function fetchCompanyInfo() {
     loading.value = true
