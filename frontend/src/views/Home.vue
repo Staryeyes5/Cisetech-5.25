@@ -16,7 +16,7 @@
         <img :src="heroImage" alt="" />
       </div>
       <div class="container">
-        <div class="hero-content reveal">
+        <div class="hero-content banner-hero-content reveal">
           <h1 class="hero-title" data-text="Cisetech">Cisetech</h1>
           <div class="hero-slogan">
             <p class="ai-glow">申朴AI·智创无限</p>
@@ -58,17 +58,26 @@
         </div>
 
         <div class="product-grid">
-          <article v-for="product in products" :key="product.id" class="product-card reveal">
+          <article
+            v-for="(product, index) in products"
+            :key="product.id"
+            class="product-card reveal"
+            :style="{ transitionDelay: `${Math.min(index, 7) * 0.1}s` }"
+          >
             <router-link :to="`/business-detail#${product.id}`" class="product-media">
               <img :src="product.image" :alt="product.name" />
               <span class="product-badge">{{ product.badge }}</span>
             </router-link>
             <div class="product-body">
-              <p class="product-category">{{ product.category }}</p>
+              <p class="product-category" :style="{ '--product-accent': product.accent }">{{ product.category }}</p>
               <h3>{{ product.name }}</h3>
               <p>{{ product.description }}</p>
-              <router-link :to="`/business-detail#${product.id}`" class="product-link">
-                了解详情
+              <router-link
+                :to="`/business-detail#${product.id}`"
+                class="product-link"
+                :style="{ '--product-accent': product.accent }"
+              >
+                {{ product.linkText }}
               </router-link>
             </div>
           </article>
@@ -271,14 +280,14 @@ const businessModules = [
 ]
 
 const products = [
-  { id: 'product-simple-insight', name: 'Simple Insight 一体化智能可观测平台', category: '本地私有化部署', badge: '本地私有化部署', description: '集成全栈链路监控、智能异常检测与自动化响应，本地私有化部署为企业提供全方位安全护航。', image: simpleInsightImage },
-  { id: 'product-ai-recruit', name: '智能招聘系统', category: '智能人力资源', badge: '智能人力资源', description: '重塑人才招聘流程，通过简历智能解析与初筛，提升招聘效率300%以上。', image: aiRecruitImage },
-  { id: 'product-ai-bidding', name: 'AI 招投标助手', category: '智慧办公', badge: '智慧办公', description: '自动化采集标讯信息、分析招标需求，一键生成合规应标文件，大幅降低人为失误，提升中标率。', image: aiBiddingImage },
-  { id: 'product-muxi-gpu', name: '国产通用 GPU', category: '国产算力底座', badge: '国产算力底座', description: '专为大规模AI计算设计，支持通用计算与图形渲染，实现国产化替代的强大动力源。', image: muxiGpuImage },
-  { id: 'product-ai-health', name: '职场健康加油站', category: '职场健康管理', badge: '职场健康管理', description: '专注企业职工健康管理，提供一站式健康监测、智能评估与个性化干预服务。', image: healthImage },
-  { id: 'product-oceanbase', name: 'OceanBase 数据库', category: '企业级数据库', badge: '企业级数据库', description: '原生分布式数据库，具备城市级无损容灾、全兼容Oracle SQL语法、极致压缩等核心能力。', image: oceanBaseImage },
-  { id: 'product-sql-audit', name: '申朴 SQL 代码审计平台', category: '数据库安全', badge: '数据库安全', description: '面向企业数据库安全的专业化静态代码检测产品，精准识别SQL注入、权限越权、数据泄露等高风险问题。', image: sqlAuditImage },
-  { id: 'product-low-altitude', name: '低空综合管理服务平台', category: '智慧城市·低空经济', badge: '智慧城市·低空经济', description: '面向低空飞行管理领域的专业测试平台，支持测试任务全生命周期管理、测试数据智能生成、多语言脚本编写等核心功能。', image: lowAltitudeImage }
+  { id: 'product-simple-insight', name: 'Simple Insight 一体化智能可观测平台', category: '本地私有化部署', badge: '本地私有化部署', description: '集成全栈链路监控、智能异常检测与自动化响应，本地私有化部署为企业提供全方位安全护航。', image: simpleInsightImage, accent: '#22d3ee', linkText: '详情介绍' },
+  { id: 'product-ai-recruit', name: '智能招聘系统', category: '智能人力资源', badge: '智能人力资源', description: '重塑人才招聘流程，通过简历智能解析与初筛，提升招聘效率300%以上。', image: aiRecruitImage, accent: '#c084fc', linkText: '了解详情' },
+  { id: 'product-ai-bidding', name: 'AI 招投标助手', category: '智慧办公', badge: '智慧办公', description: '自动化采集标讯信息、分析招标需求，一键生成合规应标文件，大幅降低人为失误，提升中标率。', image: aiBiddingImage, accent: '#34d399', linkText: '了解详情' },
+  { id: 'product-muxi-gpu', name: '国产通用 GPU', category: '国产算力底座', badge: '国产算力底座', description: '专为大规模AI计算设计，支持通用计算与图形渲染，实现国产化替代的强大动力源。', image: muxiGpuImage, accent: '#f59e0b', linkText: '申请试用' },
+  { id: 'product-ai-health', name: '职场健康加油站', category: '职场健康管理', badge: '职场健康管理', description: '专注企业职工健康管理，提供一站式健康监测、智能评估与个性化干预服务。', image: healthImage, accent: '#fb7185', linkText: '了解详情' },
+  { id: 'product-oceanbase', name: 'OceanBase 数据库', category: '企业级数据库', badge: '企业级数据库', description: '原生分布式数据库，具备城市级无损容灾、全兼容Oracle SQL语法、极致压缩等核心能力。', image: oceanBaseImage, accent: '#60a5fa', linkText: '了解详情' },
+  { id: 'product-sql-audit', name: '申朴 SQL 代码审计平台', category: '数据库安全', badge: '数据库安全', description: '面向企业数据库安全的专业化静态代码检测产品，精准识别SQL注入、权限越权、数据泄露等高风险问题。', image: sqlAuditImage, accent: '#f87171', linkText: '了解详情' },
+  { id: 'product-low-altitude', name: '低空综合管理服务平台', category: '智慧城市·低空经济', badge: '智慧城市·低空经济', description: '面向低空飞行管理领域的专业测试平台，支持测试任务全生命周期管理、测试数据智能生成、多语言脚本编写等核心功能。', image: lowAltitudeImage, accent: '#38bdf8', linkText: '了解详情' }
 ]
 
 const strengths = [
@@ -501,21 +510,20 @@ onUnmounted(() => {
 }
 
 .hero-section {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  display: block;
   overflow: hidden;
-  padding-top: 180px;
-  background:
-    radial-gradient(circle at 68% 42%, rgba(14, 165, 233, 0.2), transparent 34%),
-    linear-gradient(135deg, #020617 0%, #07111f 48%, #0f172a 100%);
+  padding: 0;
+  cursor: grab;
+  background: #0f172a;
 }
 
 .hero-bg {
   position: absolute;
   inset: 0;
-  opacity: 0.68;
+  opacity: 1;
   pointer-events: none;
 }
 
@@ -524,33 +532,37 @@ onUnmounted(() => {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: saturate(1.08);
+  filter: none;
+  transition: transform 0.8s ease-out;
 }
 
-.hero-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(2, 6, 23, 0.92) 0%, rgba(2, 6, 23, 0.72) 45%, rgba(2, 6, 23, 0.35) 100%),
-    linear-gradient(0deg, #020617 0%, transparent 34%);
+.hero-section:hover .hero-bg img {
+  transform: scale(1.08);
+}
+
+.hero-section .container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 920px;
-  margin: -65px auto 0;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
   text-align: center;
 }
 
 .hero-title {
   position: relative;
   display: inline-block;
-  font-size: clamp(3rem, 8vw, 7rem);
+  font-size: 4rem;
   line-height: 0.98;
   font-weight: 900;
-  margin-bottom: 1rem;
+  margin-bottom: 12px;
   background: linear-gradient(135deg, #fff 0%, #0ea5e9 50%, #22d3ee 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -577,14 +589,14 @@ onUnmounted(() => {
 
 .hero-slogan p:first-child {
   color: white;
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-size: 2.25rem;
   font-weight: 800;
   margin-bottom: 0.75rem;
 }
 
 .hero-slogan p:last-child {
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  color: #cbd5e1;
+  font-size: 1.25rem;
+  color: #e2e8f0;
 }
 
 .ai-glow {
@@ -596,23 +608,24 @@ onUnmounted(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  padding: 0.85rem 1.25rem;
-  border-radius: 8px;
-  font-weight: 800;
+  min-height: 56px;
+  padding: 16px 40px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 700;
   text-decoration: none;
   transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 
 .primary-action {
-  color: #020617;
-  background: linear-gradient(135deg, #22d3ee, #38bdf8);
+  color: white;
+  background: linear-gradient(135deg, #0ea5e9, #22d3ee);
 }
 
 .secondary-action {
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  background: rgba(15, 23, 42, 0.5);
+  border: 2px solid rgba(14, 165, 233, 0.5);
+  background: transparent;
 }
 
 .primary-action:hover,
@@ -631,6 +644,10 @@ onUnmounted(() => {
     #020617;
 }
 
+.section-dark > .container {
+  width: 100%;
+}
+
 .section-heading {
   text-align: center;
   margin-bottom: 3rem;
@@ -641,7 +658,8 @@ onUnmounted(() => {
 }
 
 .section-heading h2 {
-  font-size: clamp(2.25rem, 5vw, 3rem);
+  font-size: 3rem;
+  line-height: 1;
   color: white;
   font-weight: 900;
   margin-bottom: 0.75rem;
@@ -657,6 +675,7 @@ onUnmounted(() => {
 .section-heading p {
   color: #94a3b8;
   font-size: 1.25rem;
+  line-height: 1.75rem;
   max-width: 780px;
   margin: 0 auto;
 }
@@ -786,8 +805,8 @@ onUnmounted(() => {
 
 .business-card h3 {
   color: white;
-  font-size: 1.35rem;
-  font-weight: 850;
+  font-size: 1.25rem;
+  font-weight: 700;
 }
 
 .business-items {
@@ -797,14 +816,15 @@ onUnmounted(() => {
 
 .business-item h4 {
   color: #22d3ee;
-  font-size: 1rem;
-  margin-bottom: 0.35rem;
-  font-weight: 750;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  font-weight: 600;
 }
 
 .business-item p {
   color: #94a3b8;
-  line-height: 1.7;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 .product-card {
@@ -833,14 +853,14 @@ onUnmounted(() => {
 
 .product-badge {
   position: absolute;
-  top: 0.85rem;
-  left: 0.85rem;
-  padding: 0.35rem 0.55rem;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 4px;
   color: #020617;
   background: #22d3ee;
   font-size: 0.76rem;
-  font-weight: 850;
+  font-weight: 700;
 }
 
 .product-body {
@@ -848,19 +868,25 @@ onUnmounted(() => {
 }
 
 .product-category {
-  color: #38bdf8;
-  font-size: 0.86rem;
-  font-weight: 800;
-  margin-bottom: 0.6rem;
+  display: inline-flex;
+  padding: 0.125rem 0.5rem;
+  border-radius: 4px;
+  color: var(--product-accent, #22d3ee);
+  background: color-mix(in srgb, var(--product-accent, #22d3ee) 18%, transparent);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
 }
 
 .product-body h3,
 .product-card-more h3,
 .case-card h4 {
   color: white;
-  font-size: 1.2rem;
-  font-weight: 850;
-  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
 .product-body p,
@@ -868,12 +894,18 @@ onUnmounted(() => {
 .case-card p,
 .case-note {
   color: #94a3b8;
-  line-height: 1.65;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
 .product-link {
-  color: #22d3ee;
-  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--product-accent, #22d3ee);
+  font-size: 0.875rem;
+  font-weight: 400;
   text-decoration: none;
 }
 
@@ -907,7 +939,8 @@ onUnmounted(() => {
 }
 
 .case-card {
-  border-top: 3px solid #22d3ee;
+  padding: 1.5rem;
+  border-top: 0;
 }
 
 .case-tag {
@@ -916,9 +949,9 @@ onUnmounted(() => {
   border-radius: 6px;
   color: #38bdf8;
   background: rgba(14, 165, 233, 0.15);
-  font-size: 0.78rem;
-  font-weight: 850;
-  margin-bottom: 0.95rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
 }
 
 .case-metrics {
@@ -938,7 +971,9 @@ onUnmounted(() => {
 .case-metrics strong {
   display: block;
   color: #22d3ee;
-  font-size: 1.4rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 700;
 }
 
 .case-metrics span {
@@ -968,8 +1003,8 @@ onUnmounted(() => {
 .strength-number {
   display: block;
   color: #22d3ee;
-  font-size: 2rem;
-  font-weight: 950;
+  font-size: 1.1rem;
+  font-weight: 700;
   margin-bottom: 1rem;
 }
 
@@ -987,13 +1022,15 @@ onUnmounted(() => {
 
 .stat-card {
   text-align: center;
+  padding: 24px;
   border-radius: 16px;
   background: rgba(14, 165, 233, 0.05);
 }
 
 .stat-card strong {
-  font-size: clamp(2rem, 4vw, 3.25rem);
-  font-weight: 950;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 900;
   background: linear-gradient(135deg, #0ea5e9, #22d3ee);
   -webkit-background-clip: text;
   background-clip: text;
@@ -1005,28 +1042,36 @@ onUnmounted(() => {
 }
 
 .cta-section {
-  padding: 96px 0;
+  position: relative;
+  overflow: hidden;
   background:
-    radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.18), transparent 30%),
+    linear-gradient(90deg, rgba(8, 47, 73, 0.3), rgba(30, 58, 138, 0.3), rgba(88, 28, 135, 0.3)),
     #020617;
 }
 
 .cta-panel {
   text-align: center;
-  padding: clamp(2rem, 5vw, 4rem);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 .cta-panel p {
-  color: #22d3ee;
-  font-weight: 850;
-  margin-bottom: 0.75rem;
+  color: #cbd5e1;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  margin: 0 auto 2.5rem;
+  max-width: 42rem;
 }
 
 .cta-panel h2 {
   color: white;
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 950;
-  margin-bottom: 2rem;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
 }
 
 .cta-actions {
@@ -1191,8 +1236,28 @@ onUnmounted(() => {
 
 @media (max-width: 768px) {
   .hero-section {
-    min-height: 88vh;
-    padding: 120px 0 64px;
+    height: 550px;
+    min-height: 550px;
+    padding: 0;
+  }
+
+  .hero-content {
+    padding: 60px 15px 20px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    margin-bottom: 6px;
+  }
+
+  .hero-slogan p:first-child {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+
+  .hero-slogan p:last-child {
+    font-size: 0.9rem;
+    line-height: 1.4;
   }
 
   .business-grid,
@@ -1205,7 +1270,13 @@ onUnmounted(() => {
 
   .section-dark,
   .cta-section {
-    padding: 72px 0;
+    padding-top: 100px;
+    padding-bottom: 40px;
+  }
+
+  .section-heading h2,
+  .cta-panel h2 {
+    font-size: 2.25rem;
   }
 
   .primary-action,
