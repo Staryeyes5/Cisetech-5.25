@@ -1,160 +1,111 @@
 <template>
-  <div class="home">
-    <!-- Hero Section -->
-    <section class="hero">
+  <div class="home-page">
+    <section class="hero-section">
+      <div class="hero-bg" aria-hidden="true">
+        <img :src="heroImage" alt="" />
+      </div>
+      <div class="hero-grid" aria-hidden="true"></div>
       <div class="container">
         <div class="hero-content">
-          <div class="hero-text animate-fade-in">
-            <div class="hero-badge">
-              <span class="badge-icon">🏆</span>
-              <span>15年行业深耕</span>
-            </div>
-            <h1 class="hero-title">
-              <span class="gradient-text">融智于用</span>
-              <br>
-              国内领先金融科技解决方案专家
-            </h1>
-            <p class="hero-description">
-              申朴信息专注于为银行、保险、证券、互联网等行业客户提供全栈式数字化转型服务，拥有完整的AI、大数据、信创、信息安全技术体系。
-            </p>
-            <div class="hero-actions">
-              <router-link to="/services" class="btn btn-primary btn-lg">
-                了解核心业务
-              </router-link>
-              <router-link to="/contact" class="btn btn-outline btn-lg">
-                联系我们
-              </router-link>
-            </div>
-          </div>
-          <div class="hero-image">
-            <div class="tech-decoration">
-              <div class="tech-circle circle-1"></div>
-              <div class="tech-circle circle-2"></div>
-              <div class="tech-circle circle-3"></div>
-            </div>
+          <p class="hero-kicker">Cisetech</p>
+          <h1 class="hero-title">申朴AI・智创无限</h1>
+          <p class="hero-subtitle">AI 聚力数转智改，创领智能新生态</p>
+          <div class="hero-actions">
+            <router-link to="/services" class="primary-action">探索核心产品</router-link>
+            <router-link to="/contact" class="secondary-action">立即咨询</router-link>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats">
+    <section class="business-section section-dark" id="services">
       <div class="container">
-        <div class="stats-grid">
-          <div class="stat-item animate-slide-up">
-            <div class="stat-number">15+</div>
-            <div class="stat-label">年行业经验</div>
-          </div>
-          <div class="stat-item animate-slide-up" style="animation-delay: 0.1s;">
-            <div class="stat-number">25+</div>
-            <div class="stat-label">城市服务覆盖</div>
-          </div>
-          <div class="stat-item animate-slide-up" style="animation-delay: 0.2s;">
-            <div class="stat-number">500+</div>
-            <div class="stat-label">专业团队</div>
-          </div>
-          <div class="stat-item animate-slide-up" style="animation-delay: 0.3s;">
-            <div class="stat-number">数百家</div>
-            <div class="stat-label">合作客户</div>
-          </div>
+        <div class="section-heading">
+          <h2>核心业务</h2>
+          <p>全栈AI能力，赋能企业智能化转型</p>
         </div>
-      </div>
-    </section>
 
-    <!-- Services Preview Section -->
-    <section class="services-preview section">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">核心业务体系</h2>
-          <p class="section-subtitle">五大核心业务，全方位赋能企业数字化转型</p>
-        </div>
-        <div class="services-grid tech-grid">
-          <div 
-            v-for="(service, index) in services" 
-            :key="service.id"
-            class="service-card card"
-            :style="{ animationDelay: `${index * 0.1}s` }"
-          >
-            <div class="service-icon">{{ service.icon }}</div>
-            <h3 class="service-title">{{ service.title }}</h3>
-            <p class="service-desc">{{ service.description }}</p>
-            <router-link :to="`/services`" class="service-link">
-              了解更多 →
-            </router-link>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Technology Section -->
-    <section class="technology section bg-gray-50">
-      <div class="container">
-        <div class="tech-content">
-          <div class="tech-text">
-            <h2 class="section-title">技术底座</h2>
-            <h3 class="tech-subtitle">AI + 大数据双轮驱动</h3>
-            <p class="tech-description">
-              我们以人工智能和大数据技术为核心，构建完整的企业数字生态服务能力，
-              为客户提供从咨询规划到落地实施的全周期数字化转型服务。
-            </p>
-            <div class="tech-tags">
-              <span v-for="tag in techTags" :key="tag" class="tech-tag">
-                {{ tag }}
-              </span>
+        <div class="business-grid">
+          <article v-for="item in businessModules" :key="item.title" class="business-card">
+            <div class="business-card-header">
+              <div class="business-icon" :style="{ '--accent': item.accent }"></div>
+              <h3>{{ item.title }}</h3>
             </div>
-          </div>
-          <div class="tech-visual">
-            <div class="tech-grid-visual">
-              <div class="tech-node" v-for="(node, index) in techNodes" :key="index">
-                {{ node }}
+            <div class="business-items">
+              <div v-for="entry in item.items" :key="entry.title" class="business-item">
+                <h4>{{ entry.title }}</h4>
+                <p>{{ entry.text }}</p>
               </div>
             </div>
-          </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- Products Preview -->
-    <section class="products-preview section">
+    <section class="products-section section-dark" id="products">
       <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">自研产品矩阵</h2>
-          <p class="section-subtitle">从平台到应用，完整的产品生态体系</p>
+        <div class="section-heading">
+          <h2>核心产品方案</h2>
+          <p>基于核心技术研发的标准化产品与代理产品，满足多样化业务场景需求</p>
         </div>
-        <div class="products-grid tech-grid">
-          <div 
-            v-for="(product, index) in products" 
-            :key="product.id"
-            class="product-card card"
-            :style="{ animationDelay: `${index * 0.1}s` }"
-          >
-            <div class="product-header">
-              <span class="product-icon">{{ product.icon }}</span>
-              <span class="product-category">{{ product.category }}</span>
+
+        <div class="product-grid">
+          <article v-for="product in products" :key="product.id" class="product-card">
+            <router-link :to="`/business-detail#${product.id}`" class="product-media">
+              <img :src="product.image" :alt="product.name" />
+              <span class="product-badge">{{ product.badge }}</span>
+            </router-link>
+            <div class="product-body">
+              <p class="product-category">{{ product.category }}</p>
+              <h3>{{ product.name }}</h3>
+              <p>{{ product.description }}</p>
+              <router-link :to="`/business-detail#${product.id}`" class="product-link">
+                了解详情
+              </router-link>
             </div>
-            <h3 class="product-name">{{ product.name }}</h3>
-            <p class="product-desc">{{ product.description }}</p>
-          </div>
+          </article>
+
+          <article class="product-card product-card-more">
+            <div class="more-icon">+</div>
+            <h3>需要定制化产品？</h3>
+            <p>围绕业务场景、数据基础、算力环境和交付模式，为企业定制产品组合。</p>
+            <router-link to="/services#products" class="primary-action compact">查看全部产品</router-link>
+          </article>
         </div>
-        <div class="section-cta">
-          <router-link to="/products" class="btn btn-outline">
-            查看全部产品
+      </div>
+    </section>
+
+    <section class="strength-section section-dark" id="strength">
+      <div class="container">
+        <div class="section-heading">
+          <h2>企业实力</h2>
+          <p>资质、客户、技术与交付能力共同支撑长期服务</p>
+        </div>
+
+        <div class="strength-grid">
+          <router-link
+            v-for="item in strengths"
+            :key="item.title"
+            :to="item.to"
+            class="strength-card"
+          >
+            <span class="strength-number">{{ item.value }}</span>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.text }}</p>
           </router-link>
         </div>
       </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta section">
+    <section class="cta-section">
       <div class="container">
-        <div class="cta-content">
-          <h2 class="cta-title">准备好开始您的数字化转型之旅了吗？</h2>
-          <p class="cta-description">
-            专业团队为您提供定制化解决方案，助力企业实现业务增长与创新
-          </p>
-          <router-link to="/contact" class="btn btn-primary btn-lg">
-            立即咨询
-          </router-link>
+        <div class="cta-panel">
+          <p>专业团队，AI赋能</p>
+          <h2>为您的企业打造智能化解决方案</h2>
+          <div class="cta-actions">
+            <router-link to="/contact" class="primary-action">立即咨询</router-link>
+            <router-link to="/about" class="secondary-action">了解申朴</router-link>
+          </div>
         </div>
       </div>
     </section>
@@ -162,448 +113,614 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import { useHead } from '@vueuse/head'
 
+import heroImage from '../../../assets/backgrounds/背景图球.png'
+import simpleInsightImage from '../../../assets/projects/unnamed 2.png'
+import aiRecruitImage from '../../../assets/projects/unnamed 9.png'
+import aiBiddingImage from '../../../assets/projects/招投标助手.jpg'
+import muxiGpuImage from '../../../assets/projects/unnamed 3.png'
+import healthImage from '../../../assets/projects/gmyl.jpeg'
+import oceanBaseImage from '../../../assets/projects/OceanBase2.png'
+import sqlAuditImage from '../../../assets/backgrounds/sql-audit-platform.jpeg'
+import lowAltitudeImage from '../../../assets/backgrounds/低空经济bg.png'
+
 useHead({
-  title: '申朴信息 - 国内领先金融科技解决方案专家',
+  title: 'Cisetech - 申朴AI・智创无限',
   meta: [
-    { name: 'description', content: '申朴信息是国内领先的金融科技与企业数字化转型解决方案服务商，15年行业深耕经验。' }
+    {
+      name: 'description',
+      content: '申朴信息技术（上海）股份有限公司 - 国内领先的金融科技与企业数字化转型解决方案服务商，AI驱动企业智能化升级'
+    },
+    {
+      name: 'keywords',
+      content: 'Cisetech,申朴信息,金融科技,数字化转型,AI赋能,信创'
+    }
   ]
 })
 
-const services = ref([
+const businessModules = [
   {
-    id: 1,
-    title: '数字化转型服务',
-    description: '企业全周期数字化转型定制方案，业务场景-技术应用全链条升级服务',
-    icon: '🔄'
+    title: '战略咨询和规划',
+    accent: '#22d3ee',
+    items: [
+      {
+        title: '顶层设计',
+        text: 'AI环境下IT管理规划、IT治理、降本增效、AI原生开发平台、应用场景设计'
+      },
+      {
+        title: '应用模式',
+        text: '业务流程咨询、系统方案、产品设计、技术架构'
+      },
+      {
+        title: '技术选型',
+        text: '开发架构、运维架构、算力架构、安全架构、Agent架构、知识库构建'
+      }
+    ]
   },
   {
-    id: 2,
-    title: 'AI赋能服务',
-    description: '自有核心AI技术场景化定制，企业智能体系搭建，AI驱动业务升级服务',
-    icon: '🤖'
+    title: '解决方案',
+    accent: '#a78bfa',
+    items: [
+      {
+        title: '算力供给与集群管理',
+        text: '算力租赁/供给、算力资源管理、混合算力架构设计'
+      },
+      {
+        title: '数据加工',
+        text: '多模态数据标注、数据采集、数据治理'
+      },
+      {
+        title: '企业级Open Claw应用部署',
+        text: '基于K8s容器化、高可用、可管控的智能体平台，把大模型变成可落地、可运维、可安全合规的企业级系统'
+      },
+      {
+        title: '模型训练',
+        text: '代码小模型、领域模型训练、Agent调优'
+      }
+    ]
   },
   {
-    id: 3,
-    title: '信息安全服务',
-    description: '网络安全监测、数据加密、安全风险排查、企业信息资产安全保障服务',
-    icon: '🛡️'
+    title: '产品',
+    accent: '#34d399',
+    items: [
+      {
+        title: 'AI方向',
+        text: 'AI辅助编程工具、AI招聘、招投标助手、各类场景AI Agent、智安AI Agent安全验证平台'
+      },
+      {
+        title: '大数据管理与应用方向',
+        text: '数据资产治理与可视化平台、长尾客户营销'
+      },
+      {
+        title: '国产信创方向',
+        text: 'SQL AI Review、Bettle、Carn、Data Bus，以及企业应用鸿蒙化架构与实施方案'
+      },
+      {
+        title: '客户体验方向',
+        text: 'Simple Insight 一体化智能可观测平台'
+      }
+    ]
   },
   {
-    id: 4,
-    title: '信创适配服务',
-    description: '数据库信创全流程服务，含规划咨询、系统选型适配、应用开发迁移',
-    icon: '🖥️'
-  },
-  {
-    id: 5,
-    title: 'ITO/BPO外包服务',
-    description: '项目外包、人力外包、业务流程外包等多元化外包服务',
-    icon: '📊'
+    title: '人力资源配置与服务',
+    accent: '#fbbf24',
+    items: [
+      {
+        title: 'AI基建',
+        text: '标注、审核、模型训练、AI人才培训等'
+      },
+      {
+        title: '技术人员供给',
+        text: '人工智能、软件研发、大数据、区块链、物联网、网络与数据安全等技术开发、测试、运维'
+      },
+      {
+        title: '业务流程人员供给',
+        text: '呼叫中心、客服、外呼、催收、标注、审核、运营、金融后台服务'
+      },
+      {
+        title: '用工配置与交付模式',
+        text: '劳务派遣、灵活用工、HRO、RPO，在岸、离岸、全职、兼职等'
+      }
+    ]
   }
-])
+]
 
-const products = ref([
+const products = [
   {
-    id: 1,
-    name: 'APM可观测平台',
-    description: '全链路应用性能监控与可观测性解决方案',
-    icon: '📈',
-    category: 'AI赋能'
+    id: 'product-simple-insight',
+    name: 'Simple Insight 一体化智能可观测平台',
+    category: '本地私有化部署',
+    badge: '本地私有化部署',
+    description: '集成全栈链路监控、智能异常检测与自动化响应，本地私有化部署为企业提供全方位安全护航。',
+    image: simpleInsightImage
   },
   {
-    id: 2,
-    name: 'AI辅助编程',
-    description: '智能化代码生成与编程辅助工具',
-    icon: '💻',
-    category: 'AI赋能'
+    id: 'product-ai-recruit',
+    name: '智能招聘系统',
+    category: '智能人力资源',
+    badge: '智能人力资源',
+    description: '重塑人才招聘流程，通过简历智能解析与初筛，提升招聘效率。',
+    image: aiRecruitImage
   },
   {
-    id: 3,
-    name: 'SME中小微产业金融系统',
-    description: '中小微企业金融服务数字化解决方案',
-    icon: '🏦',
-    category: '金融科技'
+    id: 'product-ai-bidding',
+    name: 'AI 招投标助手',
+    category: '智慧办公',
+    badge: '智慧办公',
+    description: '自动化采集标讯信息、分析招标需求，一键生成合规应标文件。',
+    image: aiBiddingImage
+  },
+  {
+    id: 'product-muxi-gpu',
+    name: '国产通用 GPU',
+    category: '国产算力底座',
+    badge: '国产算力底座',
+    description: '专为大规模AI计算设计，支持通用计算与图形渲染。',
+    image: muxiGpuImage
+  },
+  {
+    id: 'product-ai-health',
+    name: '职场健康加油站',
+    category: '职场健康管理',
+    badge: '职场健康管理',
+    description: '专注企业职工健康管理，提供健康监测、智能评估与个性化干预服务。',
+    image: healthImage
+  },
+  {
+    id: 'product-oceanbase',
+    name: 'OceanBase 数据库',
+    category: '企业级数据库',
+    badge: '企业级数据库',
+    description: '原生分布式数据库，为金融、政务、电信等关键行业提供高可用、高性能、高安全的数据基础设施解决方案。',
+    image: oceanBaseImage
+  },
+  {
+    id: 'product-sql-audit',
+    name: '申朴 SQL 代码审计平台',
+    category: '数据库安全',
+    badge: '数据库安全',
+    description: '面向企业数据库安全的专业化静态代码检测产品，精准识别SQL注入、权限越权、数据泄露等高风险问题。',
+    image: sqlAuditImage
+  },
+  {
+    id: 'product-low-altitude',
+    name: '低空综合管理服务平台',
+    category: '智慧城市·低空经济',
+    badge: '低空经济',
+    description: '面向低空飞行管理领域，支持任务全生命周期管理、数据智能生成和多场景业务协同。',
+    image: lowAltitudeImage
   }
-])
+]
 
-const techTags = ref([
-  '人工智能', '大数据', '信创', '信息安全', '云计算', '区块链'
-])
-
-const techNodes = ref(['AI', '大数据', '安全', '信创', '云', '区块链'])
-
-onMounted(() => {
-})
+const strengths = [
+  {
+    value: 'CMMI 5',
+    title: '高成熟度交付能力',
+    text: '以体系化过程管理支撑复杂项目交付。',
+    to: '/qualifications#honors'
+  },
+  {
+    value: 'ISO',
+    title: '多项管理体系认证',
+    text: '覆盖质量、信息安全、服务管理与业务连续性。',
+    to: '/qualifications#qualifications'
+  },
+  {
+    value: '25+',
+    title: '全国服务网络',
+    text: '总部上海，辐射多地客户交付与服务需求。',
+    to: '/about#branches'
+  },
+  {
+    value: '500+',
+    title: '专业团队',
+    text: '汇聚研发、测试、运维、数据、AI与项目管理人才。',
+    to: '/joins'
+  }
+]
 </script>
 
 <style scoped lang="scss">
-.hero {
-  padding: 160px 0 80px;
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+.home-page {
+  min-height: 100vh;
+  background: #020617;
+  color: #e2e8f0;
+}
+
+.hero-section {
+  min-height: 100vh;
   position: relative;
+  display: flex;
+  align-items: center;
   overflow: hidden;
+  padding: 140px 0 80px;
+  background:
+    radial-gradient(circle at 68% 42%, rgba(14, 165, 233, 0.2), transparent 34%),
+    linear-gradient(135deg, #020617 0%, #07111f 48%, #0f172a 100%);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.68;
+  pointer-events: none;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(1.08);
+  }
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(2, 6, 23, 0.92) 0%, rgba(2, 6, 23, 0.72) 45%, rgba(2, 6, 23, 0.35) 100%),
+    linear-gradient(0deg, #020617 0%, transparent 34%);
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.22) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
 }
 
 .hero-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
+  position: relative;
+  z-index: 2;
+  max-width: 780px;
 }
 
-.hero-text {
-  animation: fadeIn 0.8s ease-out;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: white;
-  border-radius: 50px;
-  font-size: 0.875rem;
-  color: #0369a1;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.hero-kicker {
+  color: #22d3ee;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
 }
 
 .hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  line-height: 1.2;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.98;
+  font-weight: 950;
+  color: white;
   margin-bottom: 1.5rem;
-  color: #0c4a6e;
+  text-shadow: 0 0 36px rgba(34, 211, 238, 0.38);
 }
 
-.hero-description {
-  font-size: 1.125rem;
-  line-height: 1.8;
-  color: #475569;
+.hero-subtitle {
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  color: #cbd5e1;
   margin-bottom: 2rem;
+  max-width: 680px;
 }
 
-.hero-actions {
+.hero-actions,
+.cta-actions {
   display: flex;
-  gap: 1rem;
   flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.btn-lg {
-  padding: 0.875rem 2rem;
-  font-size: 1.125rem;
+.primary-action,
+.secondary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.85rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 
-.hero-image {
+.primary-action {
+  color: #020617;
+  background: linear-gradient(135deg, #22d3ee, #38bdf8);
+}
+
+.secondary-action {
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.primary-action:hover,
+.secondary-action:hover {
+  transform: translateY(-2px);
+}
+
+.compact {
+  min-height: 42px;
+  padding: 0.7rem 1rem;
+}
+
+.section-dark {
   position: relative;
-  height: 400px;
+  padding: 96px 0;
+  background:
+    radial-gradient(circle at 16% 10%, rgba(14, 165, 233, 0.12), transparent 26%),
+    #020617;
 }
 
-.tech-decoration {
-  position: absolute;
-  inset: 0;
-}
-
-.tech-circle {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.3;
-}
-
-.circle-1 {
-  width: 200px;
-  height: 200px;
-  background: linear-gradient(135deg, #0ea5e9, #22c55e);
-  top: 10%;
-  right: 10%;
-  animation: float 6s ease-in-out infinite;
-}
-
-.circle-2 {
-  width: 150px;
-  height: 150px;
-  background: linear-gradient(135deg, #22c55e, #0ea5e9);
-  bottom: 20%;
-  left: 20%;
-  animation: float 6s ease-in-out infinite 1s;
-}
-
-.circle-3 {
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  top: 40%;
-  left: 40%;
-  animation: float 6s ease-in-out infinite 2s;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(5deg); }
-}
-
-.stats {
-  padding: 60px 0;
-  background: white;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-}
-
-.stat-item {
+.section-heading {
   text-align: center;
-  padding: 2rem;
+  margin-bottom: 3rem;
 }
 
-.stat-number {
-  font-size: 3rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #0ea5e9, #22c55e);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 0.5rem;
-}
-
-.stat-label {
-  color: #64748b;
-  font-size: 1.125rem;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 4rem;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #0c4a6e;
-  margin-bottom: 1rem;
-}
-
-.section-subtitle {
-  font-size: 1.125rem;
-  color: #64748b;
-}
-
-.service-card,
-.product-card {
-  padding: 2rem;
-  transition: all 0.3s ease;
-  animation: slideUp 0.6s ease-out both;
-}
-
-.service-card:hover,
-.product-card:hover {
-  transform: translateY(-8px);
-}
-
-.service-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.service-title,
-.product-name {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #0c4a6e;
+.section-heading h2 {
+  font-size: clamp(2.2rem, 4vw, 3.75rem);
+  color: white;
+  font-weight: 900;
   margin-bottom: 0.75rem;
 }
 
-.service-desc,
-.product-desc {
-  color: #64748b;
-  line-height: 1.7;
-  margin-bottom: 1rem;
+.section-heading p {
+  color: #94a3b8;
+  font-size: 1.12rem;
+  max-width: 780px;
+  margin: 0 auto;
 }
 
-.service-link {
-  color: #0ea5e9;
-  text-decoration: none;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  transition: color 0.3s;
-  
-  &:hover {
-    color: #0284c7;
-  }
-}
-
-.technology {
-  background: #f8fafc;
-}
-
-.tech-content {
+.business-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
 }
 
-.tech-subtitle {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #0ea5e9;
-  margin-bottom: 1rem;
+.business-card,
+.product-card,
+.strength-card,
+.cta-panel {
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(15, 23, 42, 0.72);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(16px);
+  border-radius: 8px;
 }
 
-.tech-description {
-  font-size: 1.125rem;
-  line-height: 1.8;
-  color: #475569;
-  margin-bottom: 2rem;
+.business-card {
+  padding: 1.5rem;
 }
 
-.tech-tags {
+.business-card-header {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.tech-tag {
-  padding: 0.5rem 1rem;
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 50px;
-  font-weight: 500;
-  color: #0369a1;
-}
-
-.tech-grid-visual {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
   gap: 1rem;
+  margin-bottom: 1.25rem;
 }
 
-.tech-node {
-  aspect-ratio: 1;
-  background: linear-gradient(135deg, #0ea5e9, #22c55e);
-  border-radius: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.business-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 35%, transparent), rgba(15, 23, 42, 0.2));
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.business-card h3 {
   color: white;
-  font-weight: 700;
-  font-size: 1.125rem;
-  transition: transform 0.3s;
-  
-  &:hover {
-    transform: scale(1.05);
-  }
+  font-size: 1.35rem;
+  font-weight: 850;
 }
 
-.product-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
+.business-items {
+  display: grid;
+  gap: 0.95rem;
 }
 
-.product-icon {
-  font-size: 2.5rem;
+.business-item h4 {
+  color: #22d3ee;
+  font-size: 1rem;
+  margin-bottom: 0.35rem;
+  font-weight: 750;
+}
+
+.business-item p {
+  color: #94a3b8;
+  line-height: 1.7;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.product-card {
+  overflow: hidden;
+}
+
+.product-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.product-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.product-card:hover .product-media img {
+  transform: scale(1.05);
+}
+
+.product-badge {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 6px;
+  color: #020617;
+  background: #22d3ee;
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+.product-body {
+  padding: 1.25rem;
 }
 
 .product-category {
-  padding: 0.25rem 0.75rem;
-  background: #dbeafe;
-  color: #0369a1;
-  border-radius: 50px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.section-cta {
-  text-align: center;
-  margin-top: 3rem;
-}
-
-.cta {
-  background: linear-gradient(135deg, #0c4a6e 0%, #075985 100%);
-  color: white;
-  text-align: center;
-}
-
-.cta-title {
-  font-size: 2.5rem;
+  color: #38bdf8;
+  font-size: 0.86rem;
   font-weight: 800;
+  margin-bottom: 0.6rem;
+}
+
+.product-body h3,
+.product-card-more h3 {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 850;
+  margin-bottom: 0.75rem;
+}
+
+.product-body p,
+.product-card-more p {
+  color: #94a3b8;
+  line-height: 1.65;
   margin-bottom: 1rem;
 }
 
-.cta-description {
-  font-size: 1.25rem;
-  color: rgba(255, 255, 255, 0.8);
+.product-link {
+  color: #22d3ee;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.product-card-more {
+  min-height: 100%;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.more-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  color: #22d3ee;
+  border: 1px solid rgba(34, 211, 238, 0.4);
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+.strength-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.strength-card {
+  padding: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.strength-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(34, 211, 238, 0.45);
+}
+
+.strength-number {
+  display: block;
+  color: #22d3ee;
+  font-size: 2rem;
+  font-weight: 950;
+  margin-bottom: 1rem;
+}
+
+.strength-card h3 {
+  color: white;
+  font-weight: 850;
+  margin-bottom: 0.65rem;
+}
+
+.strength-card p {
+  color: #94a3b8;
+  line-height: 1.65;
+}
+
+.cta-section {
+  padding: 96px 0;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.18), transparent 30%),
+    #020617;
+}
+
+.cta-panel {
+  text-align: center;
+  padding: clamp(2rem, 5vw, 4rem);
+}
+
+.cta-panel p {
+  color: #22d3ee;
+  font-weight: 850;
+  margin-bottom: 0.75rem;
+}
+
+.cta-panel h2 {
+  color: white;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 950;
   margin-bottom: 2rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+.cta-actions {
+  justify-content: center;
 }
 
 @media (max-width: 1024px) {
-  .hero-content,
-  .tech-content {
-    grid-template-columns: 1fr;
-  }
-  
-  .hero-image {
-    order: -1;
-    height: 300px;
-  }
-  
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .product-grid,
+  .strength-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 768px) {
-  .hero {
-    padding: 120px 0 60px;
+  .hero-section {
+    min-height: 88vh;
+    padding: 120px 0 64px;
   }
-  
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .section-title {
-    font-size: 1.875rem;
-  }
-  
-  .cta-title {
-    font-size: 1.875rem;
-  }
-  
-  .stats-grid {
+
+  .business-grid,
+  .product-grid,
+  .strength-grid {
     grid-template-columns: 1fr;
   }
-  
-  .tech-grid-visual {
-    grid-template-columns: repeat(2, 1fr);
+
+  .section-dark,
+  .cta-section {
+    padding: 72px 0;
   }
-}
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.6s ease-out both;
+  .primary-action,
+  .secondary-action {
+    width: 100%;
+  }
 }
 </style>

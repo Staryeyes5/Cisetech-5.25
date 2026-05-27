@@ -1,6 +1,6 @@
 <template>
   <div class="joins-page">
-    <section class="page-header">
+    <section class="page-header" :style="{ backgroundImage: `linear-gradient(135deg, rgba(2, 6, 23, 0.88), rgba(12, 74, 110, 0.8)), url(${joinsHero})` }">
       <div class="container">
         <p class="eyebrow">JOIN US</p>
         <h1 class="page-title">加入 Cisetech</h1>
@@ -49,6 +49,7 @@
 
 <script setup lang="ts">
 import { useHead } from '@vueuse/head'
+import joinsHero from '../../../assets/backgrounds/joins-hero.jpg'
 
 useHead({
   title: '加入我们 | Cisetech官方招聘网站',
@@ -93,9 +94,8 @@ const culture = ['专业成长', '协作共创', '技术深耕', '长期主义']
 <style scoped lang="scss">
 .page-header {
   padding: 150px 0 90px;
-  background:
-    linear-gradient(135deg, rgba(2, 6, 23, 0.88), rgba(12, 74, 110, 0.8)),
-    url('/assets/backgrounds/joins-hero.jpg') center/cover;
+  background-position: center;
+  background-size: cover;
   color: white;
 }
 
