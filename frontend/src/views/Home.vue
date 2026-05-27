@@ -146,6 +146,39 @@
             </div>
           </div>
         </div>
+
+        <div class="qualification-block">
+          <div class="qualification-header reveal">
+            <div class="section-heading small">
+              <h3>核心资质</h3>
+              <p>国际标准认证与行业资质</p>
+            </div>
+            <router-link to="/qualifications" class="qualification-more">
+              查看更多资质
+              <span aria-hidden="true">→</span>
+            </router-link>
+          </div>
+
+          <div class="qualification-grid reveal">
+            <article v-for="item in qualifications" :key="item.title" class="qualification-card">
+              <div class="qualification-thumb">
+                <img :src="item.image" :alt="item.title" />
+              </div>
+              <h4>{{ item.title }}</h4>
+              <p>{{ item.text }}</p>
+            </article>
+          </div>
+
+          <div class="honor-tags reveal">
+            <span
+              v-for="item in honorTags"
+              :key="item.label"
+              :class="`honor-tag honor-tag-${item.color}`"
+            >
+              {{ item.label }}
+            </span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -194,6 +227,13 @@ import healthImage from '../../../assets/projects/职场健康加油站.jpeg'
 import oceanBaseImage from '../../../assets/projects/OceanBase2.png'
 import sqlAuditImage from '../../../assets/backgrounds/sql-audit-platform.jpeg'
 import lowAltitudeImage from '../../../assets/backgrounds/低空经济bg.png'
+import cmmi5Image from '../../../assets/certs/CMMI5证书.png'
+import iso9001Image from '../../../assets/certs/ISO9001中文_01.jpg'
+import iso27001Image from '../../../assets/certs/ISO27001中文_01.jpg'
+import iso20000Image from '../../../assets/certs/ISO20000中文_01.jpg'
+import highTechImage from '../../../assets/certs/高新技术企业.jpg'
+import tmmi3Image from '../../../assets/certs/TMMi3.jpg'
+import iso22301Image from '../../../assets/certs/ISO22301中文_01.jpg'
 
 useHead({
   title: 'Cisetech - 申朴AI·智创无限',
@@ -302,6 +342,26 @@ const coreStats = [
   { value: '3000', label: '员工' },
   { value: '500', label: '技术专家' },
   { value: '200', label: '软件著作权' }
+]
+
+const qualifications = [
+  { title: 'CMMI 5级', text: '软件能力成熟度最高等级', image: cmmi5Image },
+  { title: 'ISO 9001', text: '质量管理体系', image: iso9001Image },
+  { title: 'ISO 27001', text: '信息安全管理体系', image: iso27001Image },
+  { title: 'ISO 20000', text: 'IT服务管理体系', image: iso20000Image },
+  { title: '高新技术企业', text: '国家级认定', image: highTechImage },
+  { title: 'TMMi 3级', text: '测试成熟度模型', image: tmmi3Image },
+  { title: 'ISO 22301', text: '业务连续性管理', image: iso22301Image }
+]
+
+const honorTags = [
+  { label: '中国创新创业大赛企业优胜奖', color: 'amber' },
+  { label: '上海市人工智能行业协会会员', color: 'cyan' },
+  { label: '新三板最佳公司成长奖', color: 'purple' },
+  { label: '治理性规范企业', color: 'emerald' },
+  { label: '成长性卓越企业', color: 'rose' },
+  { label: '诚信经营示范单位', color: 'blue' },
+  { label: '华为HarmonyOS开发服务商', color: 'amber' }
 ]
 
 const caseStudies = [
@@ -932,7 +992,8 @@ onUnmounted(() => {
 }
 
 .case-preview,
-.stats-block {
+.stats-block,
+.qualification-block {
   margin-top: 4rem;
   padding-top: 4rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -1039,6 +1100,161 @@ onUnmounted(() => {
 
 .stat-card strong span {
   color: #22d3ee;
+}
+
+.qualification-block {
+  position: relative;
+}
+
+.qualification-header {
+  position: relative;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.qualification-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 42px;
+  margin-top: 1rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  color: white;
+  background: linear-gradient(90deg, #06b6d4, #3b82f6);
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.qualification-more:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(14, 165, 233, 0.3);
+}
+
+.qualification-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.qualification-card {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  transition: all 0.5s ease;
+}
+
+.qualification-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #22d3ee, transparent);
+}
+
+.qualification-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(14, 165, 233, 0.5);
+  box-shadow:
+    0 30px 60px rgba(14, 165, 233, 0.2),
+    0 0 40px rgba(14, 165, 233, 0.1);
+}
+
+.qualification-thumb {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.5rem;
+  overflow: hidden;
+  border-radius: 8px;
+  background: white;
+  transition: transform 0.3s ease;
+}
+
+.qualification-card:hover .qualification-thumb {
+  transform: scale(1.1);
+}
+
+.qualification-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.qualification-card h4 {
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.qualification-card p {
+  color: #64748b;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.honor-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+}
+
+.honor-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.honor-tag-amber {
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.honor-tag-cyan {
+  color: #22d3ee;
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  background: rgba(6, 182, 212, 0.1);
+}
+
+.honor-tag-purple {
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  background: rgba(168, 85, 247, 0.1);
+}
+
+.honor-tag-emerald {
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.honor-tag-rose {
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  background: rgba(244, 63, 94, 0.1);
+}
+
+.honor-tag-blue {
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(59, 130, 246, 0.1);
 }
 
 .cta-section {
@@ -1232,6 +1448,10 @@ onUnmounted(() => {
   .case-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .qualification-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
@@ -1264,7 +1484,8 @@ onUnmounted(() => {
   .product-grid,
   .strength-grid,
   .stats-grid,
-  .case-grid {
+  .case-grid,
+  .qualification-grid {
     grid-template-columns: 1fr;
   }
 
