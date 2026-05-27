@@ -13,14 +13,14 @@
             :key="item.path"
             :to="item.path" 
             class="nav-link"
-            :class="{ 'nav-link-active': $route.path === item.path }"
+            :class="{ 'nav-link-active': isNavActive(item) }"
             @click="isMenuOpen = false"
           >
             {{ item.label }}
           </router-link>
           
           <router-link to="/contact" class="btn btn-primary ml-4" @click="isMenuOpen = false">
-            联系我们
+            咨询合作
           </router-link>
         </div>
 
@@ -34,19 +34,27 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { useSiteStore } from '@/stores/site'
 
 const siteStore = useSiteStore()
+const route = useRoute()
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
 
 const navItems = [
   { path: '/', label: '首页' },
-  { path: '/services', label: '核心业务' },
-  { path: '/products', label: '产品方案' },
+  { path: '/services', label: '核心产品', activePaths: ['/services', '/products', '/business-detail'] },
   { path: '/qualifications', label: '企业实力' },
+  { path: '/joins', label: '招贤纳士' },
   { path: '/about', label: '关于我们' }
 ]
+
+const isNavActive = (item: { path: string; activePaths?: string[] }) => {
+  return item.path === '/'
+    ? route.path === '/'
+    : route.path === item.path || Boolean(item.activePaths?.includes(route.path))
+}
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50

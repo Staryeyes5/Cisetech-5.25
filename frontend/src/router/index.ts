@@ -30,12 +30,30 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    path: '/business-detail',
+    name: 'BusinessDetail',
+    component: () => import('@/views/BusinessDetail.vue'),
+    meta: {
+      title: '核心产品详情 - Cisetech',
+      description: 'Cisetech核心产品详情，包括一体化智能可观测平台、国产通用GPU、OceanBase数据库、智能招聘系统、AI招投标助手等。'
+    }
+  },
+  {
     path: '/qualifications',
     name: 'Qualifications',
     component: () => import('@/views/Qualifications.vue'),
     meta: {
       title: '企业实力与资质荣誉 - 申朴信息',
       description: '申朴信息拥有高新技术企业、软件企业认定、专精特新中小企业等权威资质认证。'
+    }
+  },
+  {
+    path: '/joins',
+    name: 'Joins',
+    component: () => import('@/views/Joins.vue'),
+    meta: {
+      title: '加入我们 | Cisetech官方招聘网站',
+      description: '加入Cisetech，与优秀团队共创未来。我们正在寻找具备好奇心、创造力和专业精神的伙伴。'
     }
   },
   {
@@ -64,6 +82,12 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
+    } else if (to.hash) {
+      return {
+        el: to.hash,
+        top: 90,
+        behavior: 'smooth'
+      }
     } else {
       return { top: 0 }
     }

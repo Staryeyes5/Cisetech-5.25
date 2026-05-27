@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { useHead from '@vueuse/head'
+import { useHead } from '@vueuse/head'
 
 useHead({
   title: '核心业务体系 - 申朴信息',
