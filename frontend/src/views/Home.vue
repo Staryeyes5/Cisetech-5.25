@@ -36,7 +36,17 @@
         <div class="business-grid">
           <article v-for="item in businessModules" :key="item.title" class="business-card reveal">
             <div class="business-card-header">
-              <div class="business-icon" :style="{ '--accent': item.accent }"></div>
+              <div class="business-icon" :style="{ '--accent': item.accent }">
+                <svg viewBox="0 0 24 24" fill="none" :stroke="item.iconStroke || 'currentColor'" stroke-width="1.5">
+                  <path
+                    v-for="path in item.iconPaths"
+                    :key="path"
+                    :d="path"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
               <h3>{{ item.title }}</h3>
             </div>
             <div class="business-items">
@@ -62,7 +72,7 @@
             v-for="(product, index) in products"
             :key="product.id"
             class="product-card reveal"
-            :style="{ transitionDelay: `${Math.min(index, 7) * 0.1}s` }"
+            :style="{ transitionDelay: `${Math.min(index, 7) * 0.1}s`, '--product-accent': product.accent }"
           >
             <router-link :to="`/business-detail#${product.id}`" class="product-media">
               <img :src="product.image" :alt="product.name" />
@@ -277,6 +287,9 @@ const businessModules = [
   {
     title: '战略咨询和规划',
     accent: '#22d3ee',
+    iconPaths: [
+      'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'
+    ],
     items: [
       { title: '顶层设计', text: 'AI环境下IT管理规划、IT治理、降本增效、AI原生开发平台、应用场景设计' },
       { title: '应用模式', text: '业务流程咨询、系统方案、产品设计、技术架构' },
@@ -286,6 +299,13 @@ const businessModules = [
   {
     title: '解决方案',
     accent: '#a78bfa',
+    iconStroke: '#a78bfa',
+    iconPaths: [
+      'M11 4H4a1 1 0 00-1 1v4a1 1 0 001 1h1a2 2 0 014 0h2a1 1 0 001-1V5a1 1 0 00-1-1z',
+      'M11 10h2a2 2 0 014 0h1a1 1 0 001-1V5a1 1 0 00-1-1h-7',
+      'M13 10v1a2 2 0 01-2 2h-1a2 2 0 010 4v1a1 1 0 001 1h7a1 1 0 001-1v-4a1 1 0 00-1-1h-1a2 2 0 01-4 0z',
+      'M10 17v1a1 1 0 01-1 1H4a1 1 0 01-1-1v-4a1 1 0 011-1h1'
+    ],
     items: [
       { title: '算力供给与集群管理', text: '算力租赁/供给、算力资源管理、混合算力架构设计' },
       { title: '数据加工', text: '多模态数据标注、数据采集、数据治理' },
@@ -298,6 +318,12 @@ const businessModules = [
   {
     title: '产品',
     accent: '#34d399',
+    iconStroke: '#34d399',
+    iconPaths: [
+      'M12 2L2 7l10 5 10-5-10-5z',
+      'M2 17l10 5 10-5',
+      'M2 12l10 5 10-5'
+    ],
     items: [
       { title: 'AI方向', text: 'AI辅助编程工具、AI招聘、招投标助手、各类场景AI Agent、智守AI Agent安全验证平台、Agent代码安全审查' },
       { title: '大数据管理与应用方向', text: '数据资产治理与可视化平台、长尾客户营销（大数据模型+自动外呼+服销+企微私域）' },
@@ -309,6 +335,10 @@ const businessModules = [
   {
     title: '人力资源配置与服务',
     accent: '#fbbf24',
+    iconStroke: '#fbbf24',
+    iconPaths: [
+      'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'
+    ],
     items: [
       { title: 'AI基建', text: '标注（文本、语音、视频、智驾等）、审核、模型训练、AI人才培训等' },
       { title: '技术人员供给', text: '人工智能、软件研发、大数据、区块链、物联网、网络与数据安全等各类技术开发、测试、运维等' },
@@ -857,10 +887,20 @@ onUnmounted(() => {
 .business-icon {
   width: 44px;
   height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
   border-radius: 12px;
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--accent) 35%, transparent), rgba(15, 23, 42, 0.2));
   border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.business-icon svg {
+  width: 24px;
+  height: 24px;
+  color: #22d3ee;
 }
 
 .business-card h3 {
@@ -897,7 +937,8 @@ onUnmounted(() => {
   height: 12rem;
   aspect-ratio: auto;
   overflow: hidden;
-  background: #0f172a;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--product-accent, #22d3ee) 20%, transparent), rgba(15, 23, 42, 0.2));
 }
 
 .product-media img {
@@ -918,7 +959,7 @@ onUnmounted(() => {
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   color: #020617;
-  background: #22d3ee;
+  background: var(--product-accent, #22d3ee);
   font-size: 0.76rem;
   font-weight: 700;
 }
