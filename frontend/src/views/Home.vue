@@ -192,9 +192,11 @@
             <p>用数据说话，见证成长与实力</p>
           </div>
           <div class="stats-grid">
-            <div v-for="stat in coreStats" :key="stat.label" class="stat-card" :style="{ '--stat-accent': stat.accent }">
-              <strong>{{ stat.value }}<span>+</span></strong>
-              <p>{{ stat.label }}</p>
+            <div v-for="stat in coreStats" :key="stat.label" class="data-card group">
+              <div class="data-number transition-colors" :class="stat.hoverClass">
+                {{ stat.value }}<span :class="stat.plusClass">+</span>
+              </div>
+              <div class="data-label">{{ stat.label }}</div>
             </div>
           </div>
         </div>
@@ -446,10 +448,10 @@ const strengths = [
 ]
 
 const coreStats = [
-  { value: '100', label: '企业客户', accent: '#22d3ee' },
-  { value: '3000', label: '员工', accent: '#c084fc' },
-  { value: '500', label: '技术专家', accent: '#34d399' },
-  { value: '200', label: '软件著作权', accent: '#fbbf24' }
+  { value: '100', label: '企业客户', hoverClass: 'group-hover:text-cyan-400', plusClass: 'text-cyan-400' },
+  { value: '3000', label: '员工', hoverClass: 'group-hover:text-purple-400', plusClass: 'text-purple-400' },
+  { value: '500', label: '技术专家', hoverClass: 'group-hover:text-emerald-400', plusClass: 'text-emerald-400' },
+  { value: '200', label: '软件著作权', hoverClass: 'group-hover:text-amber-400', plusClass: 'text-amber-400' }
 ]
 
 const qualifications = [
@@ -1316,14 +1318,13 @@ onUnmounted(() => {
   margin-bottom: 0.5rem;
 }
 
-.strength-card p,
-.stat-card p {
+.strength-card p {
   color: #94a3b8;
   font-size: 0.875rem;
   line-height: 1.65;
 }
 
-.stat-card {
+.data-card {
   text-align: center;
   padding: 24px;
   border: 1px solid rgba(14, 165, 233, 0.1);
@@ -1332,12 +1333,12 @@ onUnmounted(() => {
   transition: all 0.3s ease;
 }
 
-.stat-card:hover {
+.data-card:hover {
   background: rgba(14, 165, 233, 0.1);
   border-color: rgba(14, 165, 233, 0.3);
 }
 
-.stat-card strong {
+.data-number {
   font-size: 3rem;
   line-height: 1;
   font-weight: 900;
@@ -1347,9 +1348,29 @@ onUnmounted(() => {
   -webkit-text-fill-color: transparent;
 }
 
-.stat-card strong span {
-  color: var(--stat-accent, #22d3ee);
-  -webkit-text-fill-color: var(--stat-accent, #22d3ee);
+.data-label {
+  color: #94a3b8;
+  margin-top: 0.5rem;
+}
+
+.text-cyan-400 {
+  color: #22d3ee;
+  -webkit-text-fill-color: #22d3ee;
+}
+
+.text-purple-400 {
+  color: #c084fc;
+  -webkit-text-fill-color: #c084fc;
+}
+
+.text-emerald-400 {
+  color: #34d399;
+  -webkit-text-fill-color: #34d399;
+}
+
+.text-amber-400 {
+  color: #fbbf24;
+  -webkit-text-fill-color: #fbbf24;
 }
 
 .qualification-block {
