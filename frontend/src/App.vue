@@ -17,7 +17,9 @@ import { useSiteStore } from '@/stores/site'
 const siteStore = useSiteStore()
 
 onMounted(() => {
-  siteStore.fetchCompanyInfo()
+  if (import.meta.env.VITE_ENABLE_REMOTE_COMPANY === 'true') {
+    siteStore.fetchCompanyInfo()
+  }
 })
 </script>
 

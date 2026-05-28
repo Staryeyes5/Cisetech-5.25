@@ -76,10 +76,12 @@
           >
             <router-link :to="`/business-detail#${product.id}`" class="product-media">
               <img :src="product.image" :alt="product.name" />
-              <span class="product-badge">{{ product.badge }}</span>
+              <span v-if="product.badgePlacement === 'media'" class="product-badge product-badge-overlay">{{ product.badge }}</span>
             </router-link>
             <div class="product-body">
-              <p class="product-category" :style="{ '--product-accent': product.accent }">{{ product.category }}</p>
+              <p v-if="product.badgePlacement === 'body'" class="product-category" :style="{ '--product-accent': product.accent }">
+                {{ product.badge }}
+              </p>
               <h3>{{ product.name }}</h3>
               <p>{{ product.description }}</p>
               <router-link
@@ -93,10 +95,22 @@
           </article>
 
           <article class="product-card product-card-more reveal">
-            <div class="more-icon">+</div>
-            <h3>需要定制化产品？</h3>
-            <p>围绕业务场景、数据基础、算力环境和交付模式，为企业定制产品组合。</p>
-            <router-link to="/services#products" class="primary-action compact">查看全部产品</router-link>
+            <div class="more-media">
+              <div class="more-content">
+                <div class="more-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  </svg>
+                </div>
+                <p>需要定制化产品？</p>
+              </div>
+            </div>
+            <div class="more-body">
+              <router-link to="/services#products" class="primary-action compact">
+                查看全部产品
+                <span aria-hidden="true">→</span>
+              </router-link>
+            </div>
           </article>
         </div>
 
@@ -107,7 +121,13 @@
           </div>
 
           <div class="case-grid">
-            <article v-for="item in caseStudies" :key="item.title" class="case-card reveal">
+            <article
+              v-for="item in caseStudies"
+              :key="item.title"
+              class="case-card reveal"
+              :style="{ '--case-accent': item.accent, transitionDelay: item.delay }"
+            >
+              <div class="case-bar"></div>
               <span class="case-tag">{{ item.tag }}</span>
               <h4>{{ item.title }}</h4>
               <p>{{ item.text }}</p>
@@ -117,14 +137,25 @@
                   <span>{{ metric.label }}</span>
                 </div>
               </div>
-              <div v-else class="case-note">{{ item.note }}</div>
+              <div v-else class="case-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    v-for="path in item.iconPaths"
+                    :key="path"
+                    :d="path"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <span>{{ item.note }}</span>
+              </div>
             </article>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section-dark fullpage-section" id="strength" data-section="strength">
+    <section class="section-dark fullpage-section" id="strength" data-section="data">
       <div class="container">
         <div class="section-heading reveal">
           <h2>企业实力</h2>
@@ -137,8 +168,19 @@
             :key="item.title"
             :to="item.to"
             class="strength-card reveal"
+            :style="{ '--strength-accent': item.accent }"
           >
-            <span class="strength-number">{{ item.value }}</span>
+            <div class="strength-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  v-for="path in item.iconPaths"
+                  :key="path"
+                  :d="path"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
             <h3>{{ item.title }}</h3>
             <p>{{ item.text }}</p>
           </router-link>
@@ -271,7 +313,7 @@ const pageNavItems = [
   { id: 'hero', label: '首页' },
   { id: 'services', label: '核心业务' },
   { id: 'products', label: '产品方案' },
-  { id: 'strength', label: '企业实力' },
+  { id: 'data', label: '企业实力' },
   { id: 'contact', label: '联系我们' }
 ]
 
@@ -350,21 +392,45 @@ const businessModules = [
 ]
 
 const products = [
-  { id: 'product-simple-insight', name: 'Simple Insight 一体化智能可观测平台', category: '本地私有化部署', badge: '本地私有化部署', description: '集成全栈链路监控、智能异常检测与自动化响应，本地私有化部署为企业提供全方位安全护航。', image: simpleInsightImage, accent: '#22d3ee', linkText: '详情介绍' },
-  { id: 'product-ai-recruit', name: '智能招聘系统', category: '智能人力资源', badge: '智能人力资源', description: '重塑人才招聘流程，通过简历智能解析与初筛，提升招聘效率300%以上。', image: aiRecruitImage, accent: '#c084fc', linkText: '了解详情' },
-  { id: 'product-ai-bidding', name: 'AI 招投标助手', category: '智慧办公', badge: '智慧办公', description: '自动化采集标讯信息、分析招标需求，一键生成合规应标文件，大幅降低人为失误，提升中标率。', image: aiBiddingImage, accent: '#34d399', linkText: '了解详情' },
-  { id: 'product-muxi-gpu', name: '国产通用 GPU', category: '国产算力底座', badge: '国产算力底座', description: '专为大规模AI计算设计，支持通用计算与图形渲染，实现国产化替代的强大动力源。', image: muxiGpuImage, accent: '#f59e0b', linkText: '申请试用' },
-  { id: 'product-ai-health', name: '职场健康加油站', category: '职场健康管理', badge: '职场健康管理', description: '专注企业职工健康管理，提供一站式健康监测、智能评估与个性化干预服务。', image: healthImage, accent: '#fb7185', linkText: '了解详情' },
-  { id: 'product-oceanbase', name: 'OceanBase 数据库', category: '企业级数据库', badge: '企业级数据库', description: '原生分布式数据库，具备城市级无损容灾、全兼容Oracle SQL语法、极致压缩等核心能力。', image: oceanBaseImage, accent: '#60a5fa', linkText: '了解详情' },
-  { id: 'product-sql-audit', name: '申朴 SQL 代码审计平台', category: '数据库安全', badge: '数据库安全', description: '面向企业数据库安全的专业化静态代码检测产品，精准识别SQL注入、权限越权、数据泄露等高风险问题。', image: sqlAuditImage, accent: '#f87171', linkText: '了解详情' },
-  { id: 'product-low-altitude', name: '低空综合管理服务平台', category: '智慧城市·低空经济', badge: '智慧城市·低空经济', description: '面向低空飞行管理领域的专业测试平台，支持测试任务全生命周期管理、测试数据智能生成、多语言脚本编写等核心功能。', image: lowAltitudeImage, accent: '#38bdf8', linkText: '了解详情' }
+  { id: 'product-simple-insight', name: 'Simple Insight 一体化智能可观测平台', badge: '本地私有化部署', badgePlacement: 'media', description: '集成全栈链路监控、智能异常检测与自动化响应，本地私有化部署为企业提供全方位安全护航。', image: simpleInsightImage, accent: '#22d3ee', linkText: '详情介绍' },
+  { id: 'product-ai-recruit', name: '智能招聘系统', badge: '智能人力资源', badgePlacement: 'body', description: '重塑人才招聘流程，通过简历智能解析与初筛，提升招聘效率300%以上。', image: aiRecruitImage, accent: '#c084fc', linkText: '了解详情' },
+  { id: 'product-ai-bidding', name: 'AI 招投标助手', badge: '智慧办公', badgePlacement: 'body', description: '自动化采集标讯信息、分析招标需求，一键生成合规应标文件，大幅降低人为失误，提升中标率。', image: aiBiddingImage, accent: '#34d399', linkText: '了解详情' },
+  { id: 'product-muxi-gpu', name: '国产通用 GPU', badge: '国产算力底座', badgePlacement: 'media', description: '专为大规模AI计算设计，支持通用计算与图形渲染，实现国产化替代的强大动力源。', image: muxiGpuImage, accent: '#f59e0b', linkText: '申请试用' },
+  { id: 'product-ai-health', name: '职场健康加油站', badge: '职场健康管理', badgePlacement: 'body', description: '专注企业职工健康管理，提供一站式健康监测、智能评估与个性化干预服务。', image: healthImage, accent: '#fb7185', linkText: '了解详情' },
+  { id: 'product-oceanbase', name: 'OceanBase 数据库', badge: '企业级数据库', badgePlacement: 'media', description: '原生分布式数据库，具备城市级无损容灾、全兼容Oracle SQL语法、极致压缩等核心能力，为金融、政务、电信等关键行业提供高可用、高性能、高安全的数据基础设施解决方案。', image: oceanBaseImage, accent: '#60a5fa', linkText: '了解详情' },
+  { id: 'product-sql-audit', name: '申朴 SQL 代码审计平台', badge: '数据库安全', badgePlacement: 'media', description: '面向企业数据库安全的专业化静态代码检测产品，精准识别SQL注入、权限越权、数据泄露等高风险问题。', image: sqlAuditImage, accent: '#f87171', linkText: '了解详情' },
+  { id: 'product-low-altitude', name: '低空综合管理服务平台', badge: '智慧城市·低空经济', badgePlacement: 'media', description: '面向低空飞行管理领域的专业测试平台，支持测试任务全生命周期管理、测试数据智能生成、多语言脚本编写等核心功能。', image: lowAltitudeImage, accent: '#38bdf8', linkText: '了解详情' }
 ]
 
 const strengths = [
-  { value: '荣誉', title: '荣誉奖项', text: '凭借在信息技术领域的卓越表现，多次获得政府和行业认可。', to: '/qualifications#honors' },
-  { value: '资质', title: '资质认证', text: '完善的资质认证体系，覆盖国际标准认证、行业资质和经营许可。', to: '/qualifications#qualifications' },
-  { value: '专利', title: '专利证书', text: '自主研发核心技术，拥有多项发明专利。', to: '/qualifications#patents' },
-  { value: '软著', title: '软件著作权', text: '自主研发软件产品，持续创新技术积累。', to: '/qualifications#software-copyrights' }
+  {
+    title: '荣誉奖项',
+    text: '凭借在信息技术领域的卓越表现，屡获各级政府和行业协会颁发的荣誉认可',
+    to: '/qualifications#honors',
+    accent: '#f59e0b',
+    iconPaths: ['M12 15l-2 5h4l-2-5zM7 3h10M9 3v1a3 3 0 006 0V3M9 3H7a2 2 0 00-2 2v1a4 4 0 004 4h.5M15 3h2a2 2 0 012 2v1a4 4 0 01-4 4h-.5']
+  },
+  {
+    title: '资质认证',
+    text: '完善的资质认证体系，涵盖国际标准认证、行业资质和各类经营许可',
+    to: '/qualifications#qualifications',
+    accent: '#22d3ee',
+    iconPaths: ['M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z']
+  },
+  {
+    title: '专利证书',
+    text: '自主研发核心技术，拥有多项发明专利',
+    to: '/qualifications#patents',
+    accent: '#34d399',
+    iconPaths: ['M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z']
+  },
+  {
+    title: '软件著作权',
+    text: '自主研发软件产品，持续创新技术积累',
+    to: '/qualifications#software-copyrights',
+    accent: '#c084fc',
+    iconPaths: ['M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4']
+  }
 ]
 
 const coreStats = [
@@ -399,13 +465,31 @@ const caseStudies = [
     tag: '案例一',
     title: 'SME智能信贷审批解决方案',
     text: '针对中小微企业信贷审批业务场景，使用私有化AI工具处理核心业务逻辑。',
+    accent: '#3b82f6',
+    delay: '0s',
     metrics: [
       { value: '+8.3%', label: '审批通过率' },
       { value: '-87%', label: '审批时长' }
     ]
   },
-  { tag: '案例二', title: '小微企业线上开户智能解决方案', text: '专为小微企业打造，AI驱动实现极致提效，开户流程从几天缩短到几分钟。', note: 'AI驱动 · 极致提效' },
-  { tag: '案例三', title: 'AI Agent安全检测平台', text: '针对AI Agent应用的安全检测与加固，确保企业AI应用安全可靠。', note: '安全检测 · 加固防护' }
+  {
+    tag: '案例二',
+    title: '小微企业线上开户智能解决方案',
+    text: '专为小微企业打造，AI驱动实现极致提效，开户流程从几天缩短到几分钟。',
+    note: 'AI驱动·极致提效',
+    accent: '#10b981',
+    delay: '0.1s',
+    iconPaths: ['M13 10V3L4 14h7v7l9-11h-7z']
+  },
+  {
+    tag: '案例三',
+    title: 'AI Agent安全检测平台',
+    text: '针对AI Agent应用的安全检测与加固，确保企业AI应用安全可靠。',
+    note: '安全检测·加固防护',
+    accent: '#a855f7',
+    delay: '0.2s',
+    iconPaths: ['M9 12l2 2 4-4', 'M5.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 016.382 3.04A12.02 12.02 0 0121 9c0 5.591-3.824 10.29-9 11.622C6.824 19.29 3 14.591 3 9c0-1.042.133-2.052.382-3.016z']
+  }
 ]
 
 const updateScrollState = () => {
@@ -964,6 +1048,10 @@ onUnmounted(() => {
   font-weight: 700;
 }
 
+.product-badge-overlay {
+  color: #0f172a;
+}
+
 .product-body {
   padding: 1.5rem;
 }
@@ -1012,24 +1100,60 @@ onUnmounted(() => {
 
 .product-card-more {
   min-height: 100%;
-  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: stretch;
+  text-align: center;
+}
+
+.more-media {
+  height: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.more-content {
+  text-align: center;
 }
 
 .more-icon {
-  width: 54px;
-  height: 54px;
+  width: 4rem;
+  height: 4rem;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem;
   color: #22d3ee;
-  border: 1px solid rgba(34, 211, 238, 0.4);
-  font-size: 2rem;
-  font-weight: 300;
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2));
+  animation: pulseRing 2s ease-in-out infinite;
+}
+
+.more-icon svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.more-content p {
+  color: #94a3b8;
+  margin: 0;
+}
+
+.more-body {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+@keyframes pulseRing {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 0 10px rgba(34, 211, 238, 0);
+  }
 }
 
 .case-preview,
@@ -1045,12 +1169,18 @@ onUnmounted(() => {
   border-top: 0;
 }
 
+.case-bar {
+  height: 0.5rem;
+  margin: -1.5rem -1.5rem 1.5rem;
+  background: linear-gradient(90deg, var(--case-accent), color-mix(in srgb, var(--case-accent) 60%, #22d3ee));
+}
+
 .case-tag {
   display: inline-flex;
   padding: 0.25rem 0.55rem;
   border-radius: 6px;
-  color: #38bdf8;
-  background: rgba(14, 165, 233, 0.15);
+  color: var(--case-accent);
+  background: color-mix(in srgb, var(--case-accent) 20%, transparent);
   font-size: 0.75rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
@@ -1085,40 +1215,68 @@ onUnmounted(() => {
 
 .case-note {
   display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   margin-top: 1rem;
-  padding: 0.45rem 0.75rem;
-  border-radius: 8px;
-  background: rgba(34, 211, 238, 0.1);
-  color: #67e8f9;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 0.75rem;
+}
+
+.case-note svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--case-accent);
 }
 
 .strength-card {
+  text-align: center;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .strength-card:hover {
-  border-color: rgba(34, 211, 238, 0.45);
+  border-color: color-mix(in srgb, var(--strength-accent) 45%, transparent);
+  transform: translateY(-10px) scale(1.05);
 }
 
-.strength-number {
-  display: block;
-  color: #22d3ee;
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+.strength-icon {
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  border-radius: 0.75rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--strength-accent), color-mix(in srgb, var(--strength-accent) 70%, #020617));
+  transition: transform 0.3s ease;
+}
+
+.strength-card:hover .strength-icon {
+  transform: scale(1.1);
+}
+
+.strength-icon svg {
+  width: 2rem;
+  height: 2rem;
 }
 
 .strength-card h3 {
   color: white;
-  font-weight: 850;
-  margin-bottom: 0.65rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
 .strength-card p,
 .stat-card p {
   color: #94a3b8;
+  font-size: 0.875rem;
   line-height: 1.65;
 }
 
