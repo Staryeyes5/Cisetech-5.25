@@ -235,13 +235,25 @@
     </section>
 
     <section class="cta-section fullpage-section" id="contact" data-section="contact">
+      <div class="cta-floating cta-floating-cyan" aria-hidden="true"></div>
+      <div class="cta-floating cta-floating-purple" aria-hidden="true"></div>
       <div class="container">
         <div class="cta-panel reveal">
-          <p>专业团队，AI赋能</p>
-          <h2>为您的企业打造智能化解决方案</h2>
+          <h2>开启您的AI转型之旅</h2>
+          <p>专业团队，AI赋能，为您的企业打造智能化解决方案</p>
           <div class="cta-actions">
-            <router-link to="/contact" class="primary-action">立即咨询</router-link>
-            <router-link to="/about" class="secondary-action">了解申朴</router-link>
+            <router-link to="/contact" class="primary-action">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              立即咨询
+            </router-link>
+            <router-link to="/about" class="secondary-action">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              了解更多
+            </router-link>
           </div>
         </div>
       </div>
@@ -779,21 +791,49 @@ onUnmounted(() => {
 
 .primary-action,
 .secondary-action {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   min-height: 56px;
   padding: 16px 40px;
   border-radius: 16px;
   font-size: 18px;
   font-weight: 700;
+  line-height: 1.25;
+  cursor: pointer;
   text-decoration: none;
-  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  transition: all 0.4s ease;
+}
+
+.primary-action svg,
+.secondary-action svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 auto;
 }
 
 .primary-action {
   color: white;
   background: linear-gradient(135deg, #0ea5e9, #22d3ee);
+  border: none;
+}
+
+.primary-action::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.primary-action:hover::before {
+  left: 100%;
 }
 
 .secondary-action {
@@ -804,7 +844,16 @@ onUnmounted(() => {
 
 .primary-action:hover,
 .secondary-action:hover {
-  transform: translateY(-2px);
+  transform: scale(1.05);
+}
+
+.primary-action:hover {
+  box-shadow: 0 20px 40px rgba(14, 165, 233, 0.4);
+}
+
+.secondary-action:hover {
+  border-color: #22d3ee;
+  background: rgba(14, 165, 233, 0.1);
 }
 
 .compact {
@@ -1464,7 +1513,33 @@ onUnmounted(() => {
     #020617;
 }
 
+.cta-floating {
+  position: absolute;
+  z-index: 0;
+  width: 16rem;
+  height: 16rem;
+  border-radius: 999px;
+  filter: blur(64px);
+  animation: floating 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.cta-floating-cyan {
+  top: 0;
+  left: 0;
+  background: rgba(6, 182, 212, 0.1);
+}
+
+.cta-floating-purple {
+  right: 0;
+  bottom: 0;
+  background: rgba(168, 85, 247, 0.1);
+  animation-delay: -2s;
+}
+
 .cta-panel {
+  position: relative;
+  z-index: 1;
   text-align: center;
   padding: 0;
   border: 0;
@@ -1484,7 +1559,7 @@ onUnmounted(() => {
 .cta-panel h2 {
   color: white;
   font-size: 3rem;
-  line-height: 1;
+  line-height: 1.1;
   font-weight: 700;
   margin-bottom: 1.5rem;
 }
@@ -1637,6 +1712,17 @@ onUnmounted(() => {
   100% {
     transform: translateY(100vh);
     opacity: 0;
+  }
+}
+
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
   }
 }
 
