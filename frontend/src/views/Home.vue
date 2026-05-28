@@ -192,7 +192,7 @@
             <p>用数据说话，见证成长与实力</p>
           </div>
           <div class="stats-grid">
-            <div v-for="stat in coreStats" :key="stat.label" class="stat-card">
+            <div v-for="stat in coreStats" :key="stat.label" class="stat-card" :style="{ '--stat-accent': stat.accent }">
               <strong>{{ stat.value }}<span>+</span></strong>
               <p>{{ stat.label }}</p>
             </div>
@@ -446,10 +446,10 @@ const strengths = [
 ]
 
 const coreStats = [
-  { value: '100', label: '企业客户' },
-  { value: '3000', label: '员工' },
-  { value: '500', label: '技术专家' },
-  { value: '200', label: '软件著作权' }
+  { value: '100', label: '企业客户', accent: '#22d3ee' },
+  { value: '3000', label: '员工', accent: '#c084fc' },
+  { value: '500', label: '技术专家', accent: '#34d399' },
+  { value: '200', label: '软件著作权', accent: '#fbbf24' }
 ]
 
 const qualifications = [
@@ -935,8 +935,7 @@ onUnmounted(() => {
 .product-card,
 .strength-card,
 .cta-panel,
-.case-card,
-.stat-card {
+.case-card {
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(14, 165, 233, 0.2);
@@ -949,8 +948,7 @@ onUnmounted(() => {
 
 .business-card,
 .case-card,
-.strength-card,
-.stat-card {
+.strength-card {
   padding: 1.5rem;
 }
 
@@ -958,8 +956,7 @@ onUnmounted(() => {
 .product-card::before,
 .strength-card::before,
 .cta-panel::before,
-.case-card::before,
-.stat-card::before {
+.case-card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -975,8 +972,7 @@ onUnmounted(() => {
 .product-card:hover::before,
 .strength-card:hover::before,
 .cta-panel:hover::before,
-.case-card:hover::before,
-.stat-card:hover::before {
+.case-card:hover::before {
   left: 100%;
 }
 
@@ -984,8 +980,7 @@ onUnmounted(() => {
 .product-card::after,
 .strength-card::after,
 .cta-panel::after,
-.case-card::after,
-.stat-card::after {
+.case-card::after {
   content: '';
   position: absolute;
   top: 0;
@@ -999,8 +994,7 @@ onUnmounted(() => {
 .product-card:hover,
 .strength-card:hover,
 .cta-panel:hover,
-.case-card:hover,
-.stat-card:hover {
+.case-card:hover {
   transform: translateY(-10px);
   border-color: rgba(14, 165, 233, 0.5);
   box-shadow:
@@ -1332,8 +1326,15 @@ onUnmounted(() => {
 .stat-card {
   text-align: center;
   padding: 24px;
+  border: 1px solid rgba(14, 165, 233, 0.1);
   border-radius: 16px;
   background: rgba(14, 165, 233, 0.05);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  background: rgba(14, 165, 233, 0.1);
+  border-color: rgba(14, 165, 233, 0.3);
 }
 
 .stat-card strong {
@@ -1347,7 +1348,8 @@ onUnmounted(() => {
 }
 
 .stat-card strong span {
-  color: #22d3ee;
+  color: var(--stat-accent, #22d3ee);
+  -webkit-text-fill-color: var(--stat-accent, #22d3ee);
 }
 
 .qualification-block {
@@ -1573,13 +1575,14 @@ onUnmounted(() => {
 
 .back-to-top {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
-  z-index: 900;
+  right: 32px;
+  bottom: 32px;
+  z-index: 1000;
   width: 48px;
   height: 48px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   border-radius: 50%;
   color: white;
@@ -1587,15 +1590,21 @@ onUnmounted(() => {
   box-shadow: 0 4px 16px rgba(14, 165, 233, 0.3);
   cursor: pointer;
   opacity: 0;
+  pointer-events: none;
   visibility: hidden;
-  transform: translateY(12px);
-  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  transform: scale(1);
+  transition: all 0.3s ease;
 }
 
 .back-to-top.visible {
   opacity: 1;
+  pointer-events: auto;
   visibility: visible;
-  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.5);
 }
 
 .back-to-top span {
@@ -1795,8 +1804,8 @@ onUnmounted(() => {
   }
 
   .back-to-top {
-    right: 16px;
-    bottom: 16px;
+    right: 32px;
+    bottom: 32px;
   }
 }
 </style>
